@@ -3,10 +3,8 @@
  - Don't bomb if an interpolation string has an unknown ${substitution},
    just leave it in the resulting string.
 
- - Don't bomb if, there is a non-ASCII pure string that got passed as a
-   substitution. This can happen because of Localizer if
-   LOCALIZER_USE_ZOPE_UNICODE is unset (Localizer 0.9.3), or if the
-   template has a non-ASCII string in it.
+ - Don't bomb if, there is a non-ASCII string that got passed as a
+   substitution, simply use its representation instead.
 
 0.2
 
