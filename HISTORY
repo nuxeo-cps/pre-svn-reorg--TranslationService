@@ -1,4 +1,21 @@
 *******************************************
+** TranslationService V0.6.1 [R1 build 2005/01/20-11:54 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Correctly replace Unicode substitutions with Localizer
+  (http://collector.zope.org/Zope/1590)
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** TranslationService V0.6.0 [R1 build 2004/09/03-13:42 by ben]
 
 Requires:

@@ -6,8 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- Correctly replace Unicode substitutions with Localizer
-  (http://collector.zope.org/Zope/1590)
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
