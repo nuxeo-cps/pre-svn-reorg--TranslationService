@@ -46,11 +46,18 @@ ManageTranslationServices = 'Manage Translation Services'
 
 class PlacefulTranslationServiceLookup:
     """Calls the nearest placeful translation service."""
+
+    def __init__(self):
+        self.dummydomain = DummyDomain('dummy')
+
+    def noTranslation(self, **kw):
+        return self.dummydomain.noTranslation(**kw)
+
     def translate(self, *args, **kw):
         context = kw.get('context')
         if context is None:
             # Placeless!
-            return None # no translation
+            return self.noTranslation(**kw)
 
         # Find a placeful translation service
         request = context.REQUEST.other
@@ -61,7 +68,7 @@ class PlacefulTranslationServiceLookup:
             translation_service = getattr(context, 'translation_service', None)
             request['_translation_service_cache'] = translation_service
         if translation_service is None:
-            return None # no translation
+            return self.noTranslation(**kw)
         return translation_service.translate(*args, **kw)
 
 

@@ -61,6 +61,15 @@ class Domain(SimpleItem):
         """Get the message catalog implementing this domain."""
         raise NotImplementedError
 
+    def noTranslation(self, mapping=None, default=None, **kw):
+        """Return the correct value when there is no translation."""
+        if default is None:
+            # In Zope 2.6, we have to return None to use the default
+            return None
+        else:
+            # In Zope 2.7, we cannot return None but we have the default
+            return self._interpolate(default, mapping)
+
     #
     # IDomain API
     #
@@ -82,7 +91,7 @@ class Domain(SimpleItem):
             # No default was passed, and msgid has no translation.
             # We'll get what's in between the tags where the translate
             # has been invoked within the template
-            return None
+            return self.noTranslation(mapping=mapping, default=default)
         return self._interpolate(text, mapping)
 
     #
@@ -119,5 +128,4 @@ class Domain(SimpleItem):
 
 class DummyDomain(Domain):
     def translate(self, *args, **kw):
-        return None
-
+        return self.noTranslation(**kw)
