@@ -1,5 +1,5 @@
-# Copyright (C) 2002 Nuxeo SARL <http://nuxeo.com>
-# Copyright (C) 2002 Florent Guillaume <mailto:fg@nuxeo.com>
+# (C) Copyright 2002 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2002 Florent Guillaume <mailto:fg@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -17,9 +17,9 @@
 #
 # $Id$
 
-"""PersistentTranslationService
+"""PlacefulTranslationService
 
-Provides a persistent configurable translation service that can call
+Provides a configurable placeful translation service that can call
 into different message catalogs.
 """
 
@@ -40,7 +40,7 @@ from LocalizerDomain import LocalizerDomain
 ManageTranslationServices = 'Manage Translation Services'
 
 
-class PersistentTranslationServiceLookup:
+class PlacefulTranslationServiceLookup:
     """Calls the nearest placeful translation service."""
     def translate(self, *args, **kw):
         context = kw.get('context')
@@ -62,12 +62,12 @@ class PersistentTranslationServiceLookup:
 
 
 # Constructors
-addPersistentTranslationServiceForm = DTMLFile(
-    'zmi/addPersistentTranslationServiceForm', globals())
+addPlacefulTranslationServiceForm = DTMLFile(
+    'zmi/addPlacefulTranslationServiceForm', globals())
 
-def addPersistentTranslationService(dispatcher, id, REQUEST=None):
-    """Adds a PersistentTranslationService."""
-    ob = PersistentTranslationService(id)
+def addPlacefulTranslationService(dispatcher, id, REQUEST=None):
+    """Adds a PlacefulTranslationService."""
+    ob = PlacefulTranslationService(id)
     container = dispatcher.Destination()
     container._setObject(id, ob)
     if REQUEST is not None:
@@ -75,10 +75,10 @@ def addPersistentTranslationService(dispatcher, id, REQUEST=None):
         REQUEST.RESPONSE.redirect('%s/manage_main' % url)
 
 
-class PersistentTranslationService(SimpleItem):
+class PlacefulTranslationService(SimpleItem):
     """ZODB-based Translation Service."""
 
-    meta_type = 'Persistent Translation Service'
+    meta_type = 'Translation Service'
 
     security = ClassSecurityInfo()
     security.declareObjectProtected(View)
@@ -264,4 +264,4 @@ class PersistentTranslationService(SimpleItem):
                                          manage_tabs_message="Deleted.")
 
 
-InitializeClass(PersistentTranslationService)
+InitializeClass(PlacefulTranslationService)

@@ -1,5 +1,5 @@
-# Copyright (C) 2002 Nuxeo SARL <http://nuxeo.com>
-# Copyright (C) 2002 Florent Guillaume <mailto:fg@nuxeo.com>
+# (C) Copyright 2002 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2002 Florent Guillaume <mailto:fg@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -35,7 +35,7 @@ class DummyLocalizerMessageCatalog(SimpleItem):
 
 class LocalizerMessageCatalog(SimpleItem):
 
-    meta_type = 'Persistent Localizer Message Catalog'
+    meta_type = 'Placeful Localizer Message Catalog' # XXX unused
 
     security = ClassSecurityInfo()
     security.declareObjectPrivate()
@@ -54,10 +54,10 @@ class LocalizerMessageCatalog(SimpleItem):
         # Find in the request cache if we have already traversed to
         # the message catalog.
         request = self.REQUEST.other
-        cache = request.get('_localizer_persistent_mc_cache')
+        cache = request.get('_localizer_placeful_mc_cache')
         if cache is None:
             cache = {}
-            request['_localizer_persistent_mc_cache'] = cache
+            request['_localizer_placeful_mc_cache'] = cache
         path = self._path
         if cache.has_key(path):
             mc = cache[path]

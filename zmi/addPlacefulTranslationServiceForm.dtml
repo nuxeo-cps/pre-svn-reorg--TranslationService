@@ -1,5 +1,5 @@
 <dtml-var manage_page_header>
-<dtml-let form_title="'Add a Persistent Translation Service'">
+<dtml-let form_title="'Add a Placeful Translation Service'">
   <dtml-var manage_form_title>
 </dtml-let>
 
@@ -7,7 +7,7 @@
   A translation service provides translations for internationalized code.
 </p>
 
-<form action="addPersistentTranslationService" method="POST">
+<form action="addPlacefulTranslationService" method="POST">
 <table cellspacing="0" cellpadding="2" border="0">
   <tr>
     <td align="left" valign="top">

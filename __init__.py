@@ -1,5 +1,5 @@
-# Copyright (C) 2002 Nuxeo SARL <http://nuxeo.com>
-# Copyright (C) 2002 Florent Guillaume <mailto:fg@nuxeo.com>
+# (C) Copyright 2002 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2002 Florent Guillaume <mailto:fg@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -17,22 +17,22 @@
 #
 # $Id$
 
-from PersistentTranslationService import PersistentTranslationService
-from PersistentTranslationService import addPersistentTranslationServiceForm
-from PersistentTranslationService import addPersistentTranslationService
-from PersistentTranslationService import ManageTranslationServices
+from PlacefulTranslationService import PlacefulTranslationService
+from PlacefulTranslationService import addPlacefulTranslationServiceForm
+from PlacefulTranslationService import addPlacefulTranslationService
+from PlacefulTranslationService import ManageTranslationServices
 
-from PersistentTranslationService import PersistentTranslationServiceLookup
+from PlacefulTranslationService import PlacefulTranslationServiceLookup
 from Products.PageTemplates.GlobalTranslationService import \
      setGlobalTranslationService
 
-setGlobalTranslationService(PersistentTranslationServiceLookup())
+setGlobalTranslationService(PlacefulTranslationServiceLookup())
 
 def initialize(registrar):
     registrar.registerClass(
-        PersistentTranslationService,
+        PlacefulTranslationService,
         permission=ManageTranslationServices,
-        constructors=(addPersistentTranslationServiceForm,
-                      addPersistentTranslationService),
+        constructors=(addPlacefulTranslationServiceForm,
+                      addPlacefulTranslationService),
         icon='translation_service_icon.gif',
         )
