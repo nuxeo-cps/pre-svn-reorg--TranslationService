@@ -1,0 +1,31 @@
+*******************************************
+** TranslationService V0.4.0 [R1 build 2003-06/17-14:33 by guillaum]
+
+New features:
+~~~~~~~~~~~~~
+- Compatible with Zope 2.7.
+*******************************************
+** TranslationService V0.3.0
+
+Bug fixes:
+~~~~~~~~~~
+- Don't bomb if an interpolation string has an unknown ${substitution},
+  just leave it in the resulting string.
+- Don't bomb if a non-ASCII string is passed as a substitution, try to
+  infer its encoding from the output encoding (which will be the case
+  if the string is issued from Localizer).
+
+*******************************************
+** TranslationService V0.2.0
+
+New features:
+~~~~~~~~~~~~~
+- Rename from PersistentTranslationService to TranslationService.
+- Now fully use the Zope 2.6 framework.
+
+*******************************************
+** TranslationService V0.2.0
+
+New features:
+~~~~~~~~~~~~~
+- Initial release.
