@@ -20,6 +20,7 @@
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 
+from DocumentTemplate.DT_Util import ustr
 from OFS.SimpleItem import SimpleItem
 
 
@@ -85,17 +86,16 @@ class Domain(SimpleItem):
         # Now substitute with the variables in mapping.
         for string in to_replace:
             var = _get_var_regex.findall(string)[0]
-            subst = mapping.get(var)
-            if subst is not None:
+            if mapping.has_key(var):
+                subst = ustr(mapping[var])
                 try:
                     text = text.replace(string, subst)
                 except UnicodeError:
                     # subst contains high-bit chars...
-                    # This is probably the result of an evaluation of an
-                    # i18n:name by plain Localizer, resulting in a string
-                    # already encoded for browser output...
-                    text = text.replace(string, '?(unknown encoding)?')
-
+                    # As we have no way of knowing the correct encoding,
+                    # substitue something instead of raising an exception.
+                    subst = `subst`[1:-1]
+                    text = text.replace(string, subst)
 
         return text
 
