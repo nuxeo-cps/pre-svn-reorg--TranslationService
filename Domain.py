@@ -73,7 +73,8 @@ class Domain(SimpleItem):
     #
 
     def translate(self, msgid, mapping=None,
-                  context=None, target_language=None):
+                  context=None, target_language=None,
+                  default=None):
         """Translate a msgid, maybe doing ${keyword} substitution.
 
         msgid is the message id to be translated.
@@ -84,7 +85,10 @@ class Domain(SimpleItem):
         # context must be adaptable to IUserPreferredLanguages.
 
         mc = self.getMessageCatalog(lang=target_language)
-        text = mc.queryMessage(msgid.strip()) # defaults to None
+        text = mc.queryMessage(msgid, default=default)
+        if text is None:
+            # No default was passed, and msgid has no translation.
+            text = msgid
         return self._interpolate(text, mapping)
 
     #
