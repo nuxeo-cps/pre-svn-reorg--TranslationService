@@ -64,7 +64,7 @@ class Domain(SimpleItem):
 
     def getMessageCatalog(self, lang=None):
         """Get the message catalog implementing this domain."""
-        raise NotImplemented
+        raise NotImplementedError
 
     #
     # IDomain API
