@@ -1,5 +1,5 @@
-# (C) Copyright 2002 Nuxeo SARL <http://nuxeo.com>
-# (C) Copyright 2002 Florent Guillaume <mailto:fg@nuxeo.com>
+# (C) Copyright 2002, 2003 Nuxeo SARL <http://nuxeo.com>
+# Author: Florent Guillaume <fg@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -17,19 +17,40 @@
 #
 # $Id$
 
+import re
+
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 
 from DocumentTemplate.DT_Util import ustr
 from OFS.SimpleItem import SimpleItem
 
+try:
+    from Globals import get_request
+except ImportError:
+    get_request = lambda: None
 
-import re
 
 # regexps taken from Zope 3 to interpolate variables
 NAME_RE = r"[a-zA-Z][a-zA-Z0-9_]*"
 _interp_regex = re.compile(r'(?<!\$)(\$(?:%(n)s|{%(n)s}))' %({'n': NAME_RE}))
 _get_var_regex = re.compile(r'%(n)s' %({'n': NAME_RE}))
+
+_charset_regex = re.compile(
+    r'text/[0-9a-z]+\s*;\s*charset=([-_0-9a-z]+)(?:(?:\s*;)|\Z)',
+    re.IGNORECASE)
+
+
+def find_encoding():
+    encoding = 'latin1'
+    request = get_request()
+    if request is not None:
+        ct = request.RESPONSE.headers.get('content-type')
+        if ct:
+            match = _charset_regex.match(ct)
+            if match:
+                encoding = match.group(1)
+    return encoding
 
 
 class Domain(SimpleItem):
@@ -84,6 +105,7 @@ class Domain(SimpleItem):
         to_replace = _interp_regex.findall(text)
 
         # Now substitute with the variables in mapping.
+        encoding = None
         for string in to_replace:
             var = _get_var_regex.findall(string)[0]
             if mapping.has_key(var):
@@ -91,10 +113,12 @@ class Domain(SimpleItem):
                 try:
                     text = text.replace(string, subst)
                 except UnicodeError:
-                    # subst contains high-bit chars...
-                    # As we have no way of knowing the correct encoding,
-                    # substitue something instead of raising an exception.
-                    subst = `subst`[1:-1]
+                    # The string subst contains high-bit chars.
+                    # Assume it's encoded in the output encoding.
+                    # (This will be the case if Localizer was used.)
+                    if encoding is None:
+                        encoding = find_encoding()
+                    subst = unicode(subst, encoding, 'ignore')
                     text = text.replace(string, subst)
 
         return text
