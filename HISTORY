@@ -1,4 +1,21 @@
 *******************************************
+** TranslationService V0.6.0 [R1 build 2004/09/03-13:42 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- In the tool, translate() takes a domain, but __call__() always uses
+  the default domain as it's the main use case.
+
+*******************************************
 ** TranslationService V0.5.0 [R1 build 2004/08/23-16:04 by madarche]
 
 ZODB Requires:
