@@ -22,7 +22,11 @@ from PersistentTranslationService import addPersistentTranslationServiceForm
 from PersistentTranslationService import addPersistentTranslationService
 from PersistentTranslationService import ManageTranslationServices
 
-import PatchTALESTranslation
+from PersistentTranslationService import PersistentTranslationServiceLookup
+from Products.PageTemplates.GlobalTranslationService import \
+     setGlobalTranslationService
+
+setGlobalTranslationService(PersistentTranslationServiceLookup())
 
 def initialize(registrar):
     registrar.registerClass(

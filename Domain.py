@@ -33,6 +33,7 @@ _get_var_regex = re.compile(r'%(n)s' %({'n': NAME_RE}))
 
 class Domain(SimpleItem):
     """Translation domain."""
+    # Inherit from a Persistent base class to be able to lookup placefully.
 
     meta_type = 'Persistent Domain'
 
@@ -43,7 +44,7 @@ class Domain(SimpleItem):
 
     def getMessageCatalog(self, lang=None):
         """Get the message catalog implementing this domain."""
-        raise 'NotImplemented'
+        raise NotImplemented
 
     #
     # IDomain API
@@ -61,8 +62,7 @@ class Domain(SimpleItem):
         # context must be adaptable to IUserPreferredLanguages.
 
         mc = self.getMessageCatalog(lang=target_language)
-        msgid = msgid.strip()
-        text = mc.getMessage(msgid)
+        text = mc.queryMessage(msgid.strip()) # defaults to None
         return self._interpolate(text, mapping)
 
     #
@@ -76,6 +76,9 @@ class Domain(SimpleItem):
         if not mapping:
             return text
 
+        if text is None:
+            return None
+
         # Find all the spots we want to substitute.
         to_replace = _interp_regex.findall(text)
 
@@ -88,7 +91,6 @@ class Domain(SimpleItem):
 
 
 class DummyDomain(Domain):
-    def translate(self, msgid, mapping=None,
-                  context=None, target_language=None):
-        return '[(%s)%s]' % (self._domain, msgid)
+    def translate(self, *args, **kw):
+        return None
 

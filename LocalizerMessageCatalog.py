@@ -28,6 +28,11 @@ from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 
 
+class DummyLocalizerMessageCatalog(SimpleItem):
+    def gettext(self, *args, **kw):
+        return None
+
+
 class LocalizerMessageCatalog(SimpleItem):
 
     meta_type = 'Persistent Localizer Message Catalog'
@@ -40,14 +45,12 @@ class LocalizerMessageCatalog(SimpleItem):
         self._lang = lang
 
     def _getLocalizerMessageCatalog(self, path):
-        try:
-            mc = self.unrestrictedTraverse(path)
-        except:
-            mc = None
+        mc = self.unrestrictedTraverse(path, default=None)
+        if mc is None:
+            mc = DummyLocalizerMessageCatalog()
         return mc
 
-    def getMessage(self, id):
-        """Get a message from the message catalog."""
+    def _getCachedMessageCatalog(self):
         # Find in the request cache if we have already traversed to
         # the message catalog.
         request = self.REQUEST.other
@@ -57,21 +60,21 @@ class LocalizerMessageCatalog(SimpleItem):
             request['_localizer_persistent_mc_cache'] = cache
         path = self._path
         if cache.has_key(path):
-            mc = cache[domain]
+            mc = cache[path]
         else:
             mc = self._getLocalizerMessageCatalog(path)
+            cache[path] = mc
+        return mc
 
-        if mc is None:
-            mc = DummyMessageCatalog() # XXX
-
-        id = id.strip()
-        text = mc.gettext(id, lang=self._lang)
-        return text
+    def getMessage(self, id):
+        """Get a message from the message catalog."""
+        mc = self._getCachedMessageCatalog()
+        return mc.gettext(id.strip(), lang=self._lang)
 
     def queryMessage(self, id, default=None):
         """Get a message from the message catalog."""
-        # Localizer's Message Catalog has no way to default.
-        return self.getMessage(id)
+        mc = self._getCachedMessageCatalog()
+        return mc.gettext(id.strip(), lang=self._lang, default=default)
 
 
 

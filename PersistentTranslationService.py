@@ -27,6 +27,7 @@ from zLOG import LOG, DEBUG
 from Globals import InitializeClass
 from Globals import DTMLFile
 from AccessControl import ClassSecurityInfo
+from AccessControl.Permissions import view as View
 
 from OFS.SimpleItem import SimpleItem
 
@@ -37,6 +38,27 @@ from LocalizerDomain import LocalizerDomain
 
 # Permission
 ManageTranslationServices = 'Manage Translation Services'
+
+
+class PersistentTranslationServiceLookup:
+    """Calls the nearest placeful translation service."""
+    def translate(self, *args, **kw):
+        context = kw.get('context')
+        if context is None:
+            # Placeless!
+            return None # no translation
+
+        # Find a placeful translation service
+        request = context.REQUEST.other
+        if request.has_key('_translation_service_cache'):
+            translation_service = request['_translation_service_cache']
+        else:
+            # Find it by acquisition
+            translation_service = getattr(context, 'translation_service', None)
+            request['_translation_service_cache'] = translation_service
+        if translation_service is None:
+            return None # no translation
+        return translation_service.translate(*args, **kw)
 
 
 # Constructors
@@ -59,7 +81,7 @@ class PersistentTranslationService(SimpleItem):
     meta_type = 'Persistent Translation Service'
 
     security = ClassSecurityInfo()
-    security.declareObjectPrivate()
+    security.declareObjectProtected(View)
 
     _domain_dict = {None: ''}
     _domain_list = (None,) # for UI ordering
