@@ -19,9 +19,6 @@
 
 import re
 
-from Globals import InitializeClass
-from AccessControl import ClassSecurityInfo
-
 from DocumentTemplate.DT_Util import ustr
 from OFS.SimpleItem import SimpleItem
 
@@ -30,16 +27,14 @@ try:
 except ImportError:
     get_request = lambda: None
 
-from TAL.TALInterpreter import NAME_RE
-from TAL.TALInterpreter import _interp_regex
-from TAL.TALInterpreter import _get_var_regex
+from TAL.TALInterpreter import _interp_regex, _get_var_regex
 
 _charset_regex = re.compile(
     r'text/[0-9a-z]+\s*;\s*charset=([-_0-9a-z]+)(?:(?:\s*;)|\Z)',
     re.IGNORECASE)
 
 
-def find_encoding():
+def _findEncoding():
     encoding = 'latin1'
     request = get_request()
     if request is not None:
@@ -70,9 +65,8 @@ class Domain(SimpleItem):
     # IDomain API
     #
 
-    def translate(self, msgid, mapping=None,
-                  context=None, target_language=None,
-                  default=None):
+    def translate(self, msgid, mapping=None, context=None, 
+                  target_language=None, default=None):
         """Translate a msgid, maybe doing ${keyword} substitution.
 
         msgid is the message id to be translated.
@@ -114,7 +108,7 @@ class Domain(SimpleItem):
                     # Assume it's encoded in the output encoding.
                     # (This will be the case if Localizer was used.)
                     if encoding is None:
-                        encoding = find_encoding()
+                        encoding = _findEncoding()
                     subst = unicode(subst, encoding, 'ignore')
                     text = text.replace(string, subst)
 

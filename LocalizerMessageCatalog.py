@@ -22,7 +22,6 @@
 A Localizer Message Catalog
 """
 
-from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 
 from OFS.SimpleItem import SimpleItem
