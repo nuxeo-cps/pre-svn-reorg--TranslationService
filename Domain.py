@@ -19,13 +19,9 @@
 
 import re
 
+import Globals
 from DocumentTemplate.DT_Util import ustr
 from OFS.SimpleItem import SimpleItem
-
-try:
-    from Globals import get_request
-except ImportError:
-    get_request = lambda: None
 
 from TAL.TALInterpreter import _interp_regex, _get_var_regex
 
@@ -36,7 +32,11 @@ _charset_regex = re.compile(
 
 def _findEncoding():
     encoding = 'latin1'
-    request = get_request()
+    get_request = getattr(Globals, 'get_request', None)
+    if get_request is None:
+        request = None
+    else:
+        request = get_request()
     if request is not None:
         ct = request.RESPONSE.headers.get('content-type')
         if ct:
