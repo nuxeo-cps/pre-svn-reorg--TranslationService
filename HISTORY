@@ -1,4 +1,24 @@
 *******************************************
+** TranslationService V0.7.0 [R1 build 2005/03/07-07:41 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Made the translation mechanism to first try to return English translations
+  when no translation is found in the target language. Then if it fails it will
+  return the default specified value. This feature, along with fuzzy
+  translations deletion, should improve the usability of sites not fully
+  translated.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** TranslationService V0.6.1 [R1 build 2005/01/20-11:54 by ben]
 
 Requires:

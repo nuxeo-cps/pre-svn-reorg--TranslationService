@@ -3,11 +3,7 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- Made the translation mechanism to first try to return English translations
-  when no translation is found in the target language. Then if it fails it will
-  return the default specified value. This feature, along with fuzzy
-  translations deletion, should improve the usability of sites not fully
-  translated.
+-
 Bug fixes:
 ~~~~~~~~~~
 -
