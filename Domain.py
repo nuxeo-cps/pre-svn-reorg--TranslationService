@@ -87,7 +87,15 @@ class Domain(SimpleItem):
             var = _get_var_regex.findall(string)[0]
             subst = mapping.get(var)
             if subst is not None:
-                text = text.replace(string, subst)
+                try:
+                    text = text.replace(string, subst)
+                except UnicodeError:
+                    # subst contains high-bit chars...
+                    # This is probably the result of an evaluation of an
+                    # i18n:name by plain Localizer, resulting in a string
+                    # already encoded for browser output...
+                    text = text.replace(string, '?(unknown encoding)?')
+
 
         return text
 
