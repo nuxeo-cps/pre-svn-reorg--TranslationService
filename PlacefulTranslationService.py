@@ -130,7 +130,6 @@ class PlacefulTranslationService(SimpleItem):
                 return LocalizerDomain(path).__of__(self)
             else:
                 return None
-
         else:
             # not an object
             return None
