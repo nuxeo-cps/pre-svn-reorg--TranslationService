@@ -172,8 +172,21 @@ class PlacefulTranslationService(SimpleItem):
         return dom
 
 
+    security.declareProtected(View, 'translate')
     def translate(self, domain, *args, **kw):
+        """Translate the given args.
+
+        This method is particularly useful for translating strings with
+        variables in them.
+
+        Example:
+        err = 'cpsschemas_err_file_too_big ${max_size}'
+        err_mapping = {'max_size': max_size}
+        translate('default', err, mapping=err_mapping)
+        """
         return self.getDomain(domain).translate(*args, **kw)
+
+    __call__ = translate
 
     #
     # ZMI
