@@ -85,7 +85,9 @@ class Domain(SimpleItem):
         # Now substitute with the variables in mapping.
         for string in to_replace:
             var = _get_var_regex.findall(string)[0]
-            text = text.replace(string, mapping.get(var))
+            subst = mapping.get(var)
+            if subst is not None:
+                text = text.replace(string, subst)
 
         return text
 
