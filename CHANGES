@@ -1,14 +1,12 @@
-ZODB Requires:
-~~~~~~~~~~~~~~
+Requires:
+~~~~~~~~~
 -
 New features:
 ~~~~~~~~~~~~~
-- Made available the translate method so that it is now possible to translate
-  strings with variables in them from python code, ie without using ZPT.
+-
 Bug fixes:
 ~~~~~~~~~~
-- When there is no translation provided, do what's necessary to have
-  the default be used. Differences between Zope 2.6 and Zope 2.7.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- mini-cleanup
+-
