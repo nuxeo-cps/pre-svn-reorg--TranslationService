@@ -1,5 +1,5 @@
-# (C) Copyright 2002 Nuxeo SARL <http://nuxeo.com>
-# (C) Copyright 2002 Florent Guillaume <mailto:fg@nuxeo.com>
+# (C) Copyright 2002, 2003 Nuxeo SARL <http://nuxeo.com>
+# Author: Florent Guillaume <fg@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -31,6 +31,10 @@ from AccessControl.Permissions import view as View
 
 from OFS.SimpleItem import SimpleItem
 
+try:
+    from Products.Localizer.MessageCatalog import MessageCatalog
+except ImportError:
+    class MessageCatalog: pass
 
 from Domain import DummyDomain
 from LocalizerDomain import LocalizerDomain
@@ -121,7 +125,7 @@ class PlacefulTranslationService(SimpleItem):
 
         if ob is not None:
             # Points to an object
-            if ob.meta_type == 'MessageCatalog':
+            if isinstance(ob, MessageCatalog):
                 # Localizer
                 return LocalizerDomain(path).__of__(self)
             else:
