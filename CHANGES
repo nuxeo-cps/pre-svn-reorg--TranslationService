@@ -8,7 +8,7 @@ New features:
 
 Bug fixes:
 ~~~~~~~~~~
--
+- When asking to translate a msgid wich is not within the catalog we were getting the msgid back. Now we'll get what's in between the tags where the translate has been invoked
 
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~

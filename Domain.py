@@ -80,7 +80,9 @@ class Domain(SimpleItem):
         text = mc.queryMessage(msgid, default=default)
         if text is None:
             # No default was passed, and msgid has no translation.
-            text = msgid
+            # We'll get what's in between the tags where the translate
+            # has been invoked within the template
+            return None
         return self._interpolate(text, mapping)
 
     #
