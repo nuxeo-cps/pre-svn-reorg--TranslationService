@@ -17,6 +17,18 @@
 #
 # $Id$
 
+from zLOG import LOG, INFO
+
+# trigger an ImportError if no i18n is available.
+try:
+    from TAL.TALDefs import ZOPE_I18N_NS
+    del ZOPE_I18N_NS
+except ImportError:
+    LOG('PersistentTranslationService', INFO,
+        "No i18n-aware TAL has been found, the translation service cannot\n"
+        "hook into PageTemplates.")
+
+
 def _dummy_translate(domain, msgid, *args, **kw):
     return '[(%s)%s]' % (domain, msgid)
 
