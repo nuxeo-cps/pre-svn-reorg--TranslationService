@@ -9,4 +9,5 @@ Bug fixes:
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- In the tool, translate() takes a domain, but __call__() always uses
+  the default domain as it's the main use case.
