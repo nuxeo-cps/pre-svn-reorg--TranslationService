@@ -202,6 +202,39 @@ class PlacefulTranslationService(SimpleItem):
 
     __call__ = translateDefault
 
+    security.declareProtected(View, 'getSelectedLanguage')
+    def getSelectedLanguage(self):
+        """Get the language currently selected by the user."""
+        return self.getDomain('default').getSelectedLanguage()
+
+    security.declareProtected(View, 'getDefaultLanguage')
+    def getDefaultLanguage(self):
+        """Get the default language."""
+        return self.getDomain('default').getDefaultLanguage()
+
+    security.declareProtected(View, 'getSupportedLanguages')
+    def getSupportedLanguages(self):
+        """Get the supported languages."""
+        return self.getDomain('default').getSupportedLanguages()
+
+    security.declareProtected(View, 'getLanguagesMap')
+    def getLanguagesMap(self):
+        """Get a map of supported languages.
+
+        Returns a datastructure like:
+        [{'id': 'en', 'title': 'English', 'selected': True},
+         {'id': 'fr', 'title': 'French', 'selected': False}]
+        """
+        return self.getDomain('default').getLanguagesMap()
+
+    security.declareProtected(View, 'changeLanguage')
+    def changeLanguage(self, lang):
+        """Change the current language.
+
+        Does not do a redirect.
+        """
+        self.getDomain('default').changeLanguage(lang)
+
     #
     # ZMI
     #

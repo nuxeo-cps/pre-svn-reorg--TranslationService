@@ -34,6 +34,40 @@ class LocalizerDomain(Domain):
     def getMessageCatalog(self, lang=None):
         return LocalizerMessageCatalog(self._path, lang=lang).__of__(self)
 
+    def _getLocalizer(self):
+        return getattr(self, 'Localizer', None)
+
+    def getSelectedLanguage(self):
+        localizer = self._getLocalizer()
+        if localizer is None:
+            return None
+        return localizer.get_selected_language()
+
+    def getDefaultLanguage(self):
+        localizer = self._getLocalizer()
+        if localizer is None:
+            return 'en'
+        return localizer.get_default_language()
+
+    def getSupportedLanguages(self):
+        localizer = self._getLocalizer()
+        if localizer is None:
+            return []
+        return list(localizer.get_supported_languages())
+
+    def getLanguagesMap(self):
+        localizer = self._getLocalizer()
+        if localizer is None:
+            return []
+        return localizer.get_languages_map()
+
+    def changeLanguage(self, lang):
+        localizer = self._getLocalizer()
+        if localizer is None:
+            return
+        # We don't call localizer.changeLanguage because it redirects
+        response = self.REQUEST.RESPONSE
+        response.setCookie('LOCALIZER_LANGUAGE', lang, path='/')
 
 
 #from DomainHandler import registerDomainHandler
