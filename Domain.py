@@ -30,11 +30,9 @@ try:
 except ImportError:
     get_request = lambda: None
 
-
-# regexps taken from Zope 3 to interpolate variables
-NAME_RE = r"[a-zA-Z][a-zA-Z0-9_]*"
-_interp_regex = re.compile(r'(?<!\$)(\$(?:%(n)s|{%(n)s}))' %({'n': NAME_RE}))
-_get_var_regex = re.compile(r'%(n)s' %({'n': NAME_RE}))
+from TAL.TALInterpreter import NAME_RE
+from TAL.TALInterpreter import _interp_regex
+from TAL.TALInterpreter import _get_var_regex
 
 _charset_regex = re.compile(
     r'text/[0-9a-z]+\s*;\s*charset=([-_0-9a-z]+)(?:(?:\s*;)|\Z)',
@@ -97,13 +95,8 @@ class Domain(SimpleItem):
 
     def _interpolate(self, text, mapping):
         """Interpolate ${keyword} substitutions."""
-        # Code taken from Zope 3
-
         if not mapping:
             return text
-
-        if text is None:
-            return None
 
         # Find all the spots we want to substitute.
         to_replace = _interp_regex.findall(text)
