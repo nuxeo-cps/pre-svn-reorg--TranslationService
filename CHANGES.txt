@@ -3,8 +3,9 @@
  - Don't bomb if an interpolation string has an unknown ${substitution},
    just leave it in the resulting string.
 
- - Don't bomb if, there is a non-ASCII string that got passed as a
-   substitution, simply use its representation instead.
+ - Don't bomb if a non-ASCII string is passed as a substitution, try to
+   infer its encoding from the output encoding (which will be the case
+   if the string is issued from Localizer).
 
 0.2
 
