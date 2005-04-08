@@ -3,8 +3,7 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- Added methods getSelectedLanguage(), getDefaultLanguage(),
-  getSupportedLanguages(), getLanguagesMap(), changeLanguage(lang).
+-
 Bug fixes:
 ~~~~~~~~~~
 -

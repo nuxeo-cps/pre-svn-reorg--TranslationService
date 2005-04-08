@@ -1,4 +1,21 @@
 *******************************************
+** TranslationService V0.8.0 [R1 build 2005/04/08-15:51 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added methods getSelectedLanguage(), getDefaultLanguage(),
+  getSupportedLanguages(), getLanguagesMap(), changeLanguage(lang).
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** TranslationService V0.7.0 [R1 build 2005/03/07-07:41 by madarche]
 
 Requires:
