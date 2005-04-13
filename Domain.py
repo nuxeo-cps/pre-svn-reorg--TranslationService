@@ -25,9 +25,6 @@ from OFS.SimpleItem import SimpleItem
 
 from TAL.TALInterpreter import _interp_regex, _get_var_regex
 
-from zLOG import LOG, DEBUG
-
-
 _charset_regex = re.compile(
     r'text/[0-9a-z]+\s*;\s*charset=([-_0-9a-z]+)(?:(?:\s*;)|\Z)',
     re.IGNORECASE)
@@ -47,8 +44,6 @@ def _findEncoding():
             if match:
                 encoding = match.group(1)
     return encoding
-
-_marker = []
 
 
 class Domain(SimpleItem):
@@ -79,34 +74,24 @@ class Domain(SimpleItem):
     # IDomain API
     #
 
-    def translate(self, msgid, mapping=None, context=None,
-                  target_language=None, default=None, default_target_language='en'):
-        """Return a translation (msgstr) from the given msgid.
+    def translate(self, msgid, mapping=None, context=None, 
+                  target_language=None, default=None):
+        """Translate a msgid, maybe doing ${keyword} substitution.
 
         msgid is the message id to be translated.
         mapping is a set of mapping to be applied on ${keywords}.
-        default is a string value to be returned if there wasn't any translation
-        found.
-
-        If the there isn't' any translation for msgid in the target_language, the
-        method will try to find a translation in the default_target_language.
-        If the there isn't' any translation for msgid in the default
-        target_language, then the method will finally return the default.
         """
         # msgid can be '${name} was born in ${country}'.
         # mapping can be {'country': 'Antarctica', 'name': 'Lomax'}.
         # context must be adaptable to IUserPreferredLanguages.
 
         mc = self.getMessageCatalog(lang=target_language)
-        text = mc.queryMessage(msgid, default=_marker)
-        if text == _marker:
-            mc = self.getMessageCatalog(lang=default_target_language)
-            text = mc.queryMessage(msgid, default=default)
-            if text is None:
-                # No default was passed, and msgid has no translation.
-                # We'll get what's in between the tags where the translate
-                # has been invoked within the template
-                return self.noTranslation(mapping=mapping, default=default)
+        text = mc.queryMessage(msgid, default=default)
+        if text is None:
+            # No default was passed, and msgid has no translation.
+            # We'll get what's in between the tags where the translate
+            # has been invoked within the template
+            return self.noTranslation(mapping=mapping, default=default)
         return self._interpolate(text, mapping)
 
     #

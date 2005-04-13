@@ -6,7 +6,10 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Revert the behavior of the translation mechanism which was to first try to
+  return English translations when no translation is found in the target
+  language. This behavior is not needed anymore with .po files of good quality
+  that CPS products have now through the use of the new update_pos script.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
