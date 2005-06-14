@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- return msgid % mapping as default expression if no default is specified
+  instead of a None object
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

@@ -91,6 +91,8 @@ class Domain(SimpleItem):
             # No default was passed, and msgid has no translation.
             # We'll get what's in between the tags where the translate
             # has been invoked within the template
+            if default is None:
+                default = msgid
             return self.noTranslation(mapping=mapping, default=default)
         return self._interpolate(text, mapping)
 
