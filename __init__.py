@@ -34,4 +34,4 @@ def initialize(registrar):
         permission=ManageTranslationServices,
         constructors=(addPlacefulTranslationServiceForm,
                       addPlacefulTranslationService),
-        icon='translation_service_icon.gif')
+        icon='translation_service_icon.png')
