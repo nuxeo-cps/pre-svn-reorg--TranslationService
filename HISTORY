@@ -1,4 +1,21 @@
 *******************************************
+** TranslationService V0.9.1 [R1 build 2005/08/05-14:02 by ben]
+** SVN URL: https://svn.nuxeo.org/pub/TranslationService/trunk Revision: 25426
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- return msgid % mapping as default expression if no default is specified
+  instead of a None object
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** TranslationService V0.9.0 [R1 build 2005/04/14-09:28 by ben]
 
 Requires:
