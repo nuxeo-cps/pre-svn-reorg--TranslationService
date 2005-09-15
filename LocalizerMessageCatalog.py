@@ -25,6 +25,9 @@ A Localizer Message Catalog
 from AccessControl import ClassSecurityInfo
 
 from OFS.SimpleItem import SimpleItem
+from utils import getKeyCache
+
+TS_LOCALIZER_MC_CACHE_KEY = '_localizer_placeful_mc_cache'
 
 
 class DummyLocalizerMessageCatalog(SimpleItem):
@@ -52,17 +55,15 @@ class LocalizerMessageCatalog(SimpleItem):
     def _getCachedMessageCatalog(self):
         # Find in the request cache if we have already traversed to
         # the message catalog.
-        request = self.REQUEST.other
-        cache = request.get('_localizer_placeful_mc_cache')
-        if cache is None:
-            cache = {}
-            request['_localizer_placeful_mc_cache'] = cache
+        cache = getKeyCache(self, TS_LOCALIZER_MC_CACHE_KEY)
+
         path = self._path
-        if cache.has_key(path):
-            mc = cache[path]
-        else:
-            mc = self._getLocalizerMessageCatalog(path)
-            cache[path] = mc
+        if path in cache:
+            return cache[path]
+
+        mc = self._getLocalizerMessageCatalog(path)
+
+        cache[path] = mc
         return mc
 
     def getMessage(self, id):

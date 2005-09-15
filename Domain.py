@@ -93,8 +93,14 @@ class Domain(SimpleItem):
             # has been invoked within the template
             if default is None:
                 default = msgid
-            return self.noTranslation(mapping=mapping, default=default)
-        return self._interpolate(text, mapping)
+            res = self.noTranslation(mapping=mapping, default=default)
+        else:
+            res = self._interpolate(text, mapping)
+        # Make sure we always return unicode
+        if not isinstance(res, unicode):
+            # This can happen if a non-unicode default is passed
+            res = unicode(res, 'iso-8859-15')
+        return res
 
     #
     # Internal

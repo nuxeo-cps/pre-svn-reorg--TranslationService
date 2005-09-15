@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- #677: translate() should always return unicode.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Added unit tests.

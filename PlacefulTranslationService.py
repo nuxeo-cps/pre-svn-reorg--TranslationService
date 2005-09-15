@@ -38,10 +38,16 @@ except ImportError:
 
 from Domain import DummyDomain
 from LocalizerDomain import LocalizerDomain
+from utils import getGlobalCache
+from utils import getKeyCache
 
 
 # Permission
 ManageTranslationServices = 'Manage Translation Services'
+
+# Cache keys
+TS_CACHE_KEY = '_translation_service_cache'
+TS_DOMAIN_CACHE_KEY = '_ts_domain_cache'
 
 
 class PlacefulTranslationServiceLookup:
@@ -60,13 +66,13 @@ class PlacefulTranslationServiceLookup:
             return self.noTranslation(**kw)
 
         # Find a placeful translation service
-        request = context.REQUEST.other
-        if request.has_key('_translation_service_cache'):
-            translation_service = request['_translation_service_cache']
+        cache = getGlobalCache(self)
+        if TS_CACHE_KEY in cache:
+            translation_service = cache[TS_CACHE_KEY]
         else:
             # Find it by acquisition
             translation_service = getattr(context, 'translation_service', None)
-            request['_translation_service_cache'] = translation_service
+            cache[TS_CACHE_KEY] = translation_service
         if translation_service is None:
             return self.noTranslation(**kw)
         return translation_service.translate(*args, **kw)
@@ -150,12 +156,9 @@ class PlacefulTranslationService(SimpleItem):
 
         # We have to lookup a message catalog in the ZODB but
         # cache some stuff otherwise things are going to be slow.
-        request = self.REQUEST.other
-        cache = request.get('_ts_domain_cache')
-        if cache is None:
-            cache = {}
-            request['_ts_domain_cache'] = cache
-        if cache.has_key(domain):
+        cache = getKeyCache(self, TS_DOMAIN_CACHE_KEY)
+
+        if domain in cache:
             return cache[domain]
 
         dom = self._getDomain(domain)
@@ -168,7 +171,6 @@ class PlacefulTranslationService(SimpleItem):
             dom = DummyDomain(domain)
 
         cache[domain] = dom
-
         return dom
 
 
