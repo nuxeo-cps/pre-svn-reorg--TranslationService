@@ -176,7 +176,7 @@ class PlacefulTranslationService(SimpleItem):
 
     security.declareProtected(View, 'translate')
     def translate(self, domain, *args, **kw):
-        """Translate the given args.
+        """Translate the given args into and return a unicode object.
 
         This method is particularly useful for translating strings with
         variables in them.
@@ -190,7 +190,8 @@ class PlacefulTranslationService(SimpleItem):
 
     security.declareProtected(View, 'translateDefault')
     def translateDefault(self, *args, **kw):
-        """Translate the given args in the default domain.
+        """Translate the given args in the default domain
+        and return a unicode object.
 
         This method is particularly useful for translating strings with
         variables in them.
