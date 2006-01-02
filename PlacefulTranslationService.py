@@ -103,8 +103,8 @@ class PlacefulTranslationService(SimpleItem):
     _domain_dict = {None: ''}
     _domain_list = (None,) # for UI ordering
 
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id='translation_service'):
+        self._setId(id)
 
     #
     # Internal

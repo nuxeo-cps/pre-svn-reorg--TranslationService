@@ -17,21 +17,16 @@
 #
 # $Id$
 
-from PlacefulTranslationService import PlacefulTranslationService
-from PlacefulTranslationService import addPlacefulTranslationServiceForm
-from PlacefulTranslationService import addPlacefulTranslationService
-from PlacefulTranslationService import ManageTranslationServices
-
-from PlacefulTranslationService import PlacefulTranslationServiceLookup
+from Products.TranslationService import PlacefulTranslationService as PTS
 from Products.PageTemplates.GlobalTranslationService import \
      setGlobalTranslationService
 
-setGlobalTranslationService(PlacefulTranslationServiceLookup())
+setGlobalTranslationService(PTS.PlacefulTranslationServiceLookup())
 
 def initialize(registrar):
     registrar.registerClass(
-        PlacefulTranslationService,
-        permission=ManageTranslationServices,
-        constructors=(addPlacefulTranslationServiceForm,
-                      addPlacefulTranslationService),
+        PTS.PlacefulTranslationService,
+        permission=PTS.ManageTranslationServices,
+        constructors=(PTS.addPlacefulTranslationServiceForm,
+                      PTS.addPlacefulTranslationService),
         icon='translation_service_icon.png')
