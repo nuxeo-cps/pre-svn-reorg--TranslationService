@@ -137,3 +137,9 @@ class Domain(SimpleItem):
 class DummyDomain(Domain):
     def translate(self, *args, **kw):
         return self.noTranslation(**kw)
+    def getSelectedLanguage(self):
+        return 'en'
+    def getDefaultLanguage(self):
+        return 'en'
+    def getSupportedLanguages(self):
+        return ('en',)
