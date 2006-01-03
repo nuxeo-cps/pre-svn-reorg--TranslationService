@@ -21,6 +21,15 @@
 
 import Globals
 
+TS_CACHE_KEY = '_translation_service_cache'
+TS_DOMAIN_CACHE_KEY = '_ts_domain_cache'
+TS_LOCALIZER_MC_CACHE_KEY = '_localizer_placeful_mc_cache'
+_ALL_KEYS = (
+    TS_CACHE_KEY,
+    TS_DOMAIN_CACHE_KEY,
+    TS_LOCALIZER_MC_CACHE_KEY,
+    )
+
 def getGlobalCache(context):
     """Get a global request cache.
 
@@ -42,3 +51,8 @@ def getKeyCache(context, key):
     if key not in cache:
         cache[key] = {}
     return cache[key]
+
+def resetGlobalCache(context):
+    cache = getGlobalCache(context)
+    for key in _ALL_KEYS:
+        cache[key] = {}

@@ -26,8 +26,7 @@ from AccessControl import ClassSecurityInfo
 
 from OFS.SimpleItem import SimpleItem
 from utils import getKeyCache
-
-TS_LOCALIZER_MC_CACHE_KEY = '_localizer_placeful_mc_cache'
+from utils import TS_LOCALIZER_MC_CACHE_KEY
 
 
 class DummyLocalizerMessageCatalog(SimpleItem):

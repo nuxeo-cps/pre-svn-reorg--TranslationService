@@ -40,14 +40,12 @@ from Domain import DummyDomain
 from LocalizerDomain import LocalizerDomain
 from utils import getGlobalCache
 from utils import getKeyCache
-
+from utils import resetGlobalCache
+from utils import TS_CACHE_KEY
+from utils import TS_DOMAIN_CACHE_KEY
 
 # Permission
 ManageTranslationServices = 'Manage Translation Services'
-
-# Cache keys
-TS_CACHE_KEY = '_translation_service_cache'
-TS_DOMAIN_CACHE_KEY = '_ts_domain_cache'
 
 
 class PlacefulTranslationServiceLookup:
@@ -146,6 +144,13 @@ class PlacefulTranslationService(SimpleItem):
         else:
             # not an object
             return None
+
+    def _resetCache(self):
+        """Clear the cache.
+
+        Called to remove dummy domain from the cache.
+        """
+        resetGlobalCache(self)
 
     #
     # ITranslationService API
