@@ -55,4 +55,5 @@ def getKeyCache(context, key):
 def resetGlobalCache(context):
     cache = getGlobalCache(context)
     for key in _ALL_KEYS:
-        cache[key] = {}
+        if key in cache:
+            del cache[key]
